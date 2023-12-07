@@ -4,24 +4,20 @@ import { useState } from "react";
 
 function App() {
   const [buttonColor, setButtonColor] = useState("red");
-  const [buttonText, setButtonText] = useState("Change to blue");
-  const newButtonColor = buttonColor === "red" ? "blue" : "red";
-  const newButtonText =
-    buttonColor === "red" ? "Change to red" : "Change to blue";
+  const [disabled, setDisAbled] = useState(false);
 
-  const handleClick = () => {
-    setButtonColor(newButtonColor);
-    setButtonText(newButtonText);
-  };
+  const newButtonColor = buttonColor === "red" ? "blue" : "red";
 
   return (
     <div>
       <button
         style={{ backgroundColor: `${buttonColor}` }}
-        onClick={handleClick}
+        onClick={() => setButtonColor(newButtonColor)}
+        disabled={disabled}
       >
-        {buttonText}
+        Change to {newButtonColor}
       </button>
+      <input type="checkbox" onClick={() => setDisAbled(!disabled)} />
     </div>
   );
 }

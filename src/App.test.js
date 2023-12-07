@@ -25,3 +25,30 @@ test("button has correct initial color and updates when click", () => {
   // 버튼이 클릭 된 후에는 버튼 텍스트가 변경되어야 함
   expect(colorBtn).toHaveTextContent("Change to red");
 });
+
+test("initial conditions and Check if check the checkbox, button is to be disabled", () => {
+  render(<App />);
+  //버튼은 활성화(enabled) 된 상태에서 시작 확인
+  const colorButton = screen.getByRole("button", { name: "Change to blue" });
+  expect(colorButton).toBeEnabled();
+  // 체크박스는 체크가 안된 상태에서 시작하는 지 확인
+  const checkbox = screen.getByRole("checkbox");
+  //toBeChecked를 부정하기 위해 not 추가
+  expect(checkbox).not.toBeChecked();
+});
+
+test("Check if check the checkbox, button is to be disabled", () => {
+  render(<App />);
+
+  const colorButton = screen.getByRole("button", { name: "Change to blue" });
+  const checkbox = screen.getByRole("checkbox");
+  // 체크박스를 체크한다.(event)
+  fireEvent.click(checkbox);
+  // 버튼이 비활성화 된다.
+  // expect(checkbox).toBeChecked();
+  expect(colorButton).toBeDisabled();
+  // 체크박스를 한번 더 체크한다.
+  fireEvent.click(checkbox);
+  // 다시 버튼이 활성화 되는지 테스트
+  expect(colorButton).toBeEnabled();
+});
