@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 
-test("button has correct initial color", () => {
+test("button has correct initial color and updates when click", () => {
   // 렌더링할 컴포넌트 작성
   render(<App />);
 
@@ -13,6 +13,15 @@ test("button has correct initial color", () => {
   expect(colorBtn).toHaveStyle({
     backgroundColor: "red",
   });
-});
 
-test("button turns blue when clicked", () => {});
+  //click button(fireEvent: 가상 DOM에서 요소와 상호작용을 할 수 있도록 도와줌)
+  fireEvent.click(colorBtn);
+
+  //버튼이 클릭된 후에는 버튼의 배경색이 파란색이길 기대함
+  expect(colorBtn).toHaveStyle({
+    backgroundColor: "blue",
+  });
+
+  // 버튼이 클릭 된 후에는 버튼 텍스트가 변경되어야 함
+  expect(colorBtn).toHaveTextContent("Change to red");
+});
