@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
+import { toBeDisabled } from "@testing-library/jest-dom/matchers";
 
 test("button has correct initial color and updates when click", () => {
   // 렌더링할 컴포넌트 작성
@@ -51,4 +52,51 @@ test("Check if check the checkbox, button is to be disabled", () => {
   fireEvent.click(checkbox);
   // 다시 버튼이 활성화 되는지 테스트
   expect(colorButton).toBeEnabled();
+});
+
+test("Check button gray when disabled", () => {
+  render(<App />);
+
+  const colorButton = screen.getByRole("button");
+
+  const checkbox = screen.getByRole("checkbox");
+
+  //체크박스를 눌러서, 버튼이 disabled 상태가 되면 버튼이 gray인지 확인
+  fireEvent.click(checkbox);
+
+  expect(colorButton).toBeDisabled();
+
+  expect(colorButton).toHaveStyle({
+    backgroundColor: "gray",
+  });
+
+  //체크박스를 다시 눌러서, 버튼이 abled 상태가 되면 버튼이 red인지 확인
+
+  fireEvent.click(checkbox);
+
+  expect(colorButton).toBeEnabled();
+
+  expect(colorButton).toHaveStyle({
+    backgroundColor: "red",
+  });
+
+  //버튼을 눌러서 색을 변경시킨 다음에, 체크박스를 눌러서 버튼이 disabled 상태가 되면 버튼이 gray인지 확인
+  fireEvent.click(colorButton);
+  expect(colorButton).toHaveStyle({
+    backgroundColor: "blue",
+  });
+
+  fireEvent.click(checkbox);
+
+  expect(colorButton).toBeDisabled();
+  expect(colorButton).toHaveStyle({
+    backgroundColor: "gray",
+  });
+
+  //체크박스를 다시 눌러서 버튼이 abled 상태가 되면 버튼이 blue인지 확인
+  fireEvent.click(checkbox);
+  expect(colorButton).toBeEnabled();
+  expect(colorButton).toHaveStyle({
+    backgroundColor: "blue",
+  });
 });

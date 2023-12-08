@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [buttonColor, setButtonColor] = useState("red");
@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       <button
-        style={{ backgroundColor: `${buttonColor}` }}
+        style={{ backgroundColor: disabled ? "gray" : `${buttonColor}` }}
         onClick={() => setButtonColor(newButtonColor)}
         disabled={disabled}
       >
