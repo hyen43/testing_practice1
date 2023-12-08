@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import App from "./App";
+import App, { replaceCamelWithSpaces } from "./App";
 import { toBeDisabled } from "@testing-library/jest-dom/matchers";
 
 test("button has correct initial color and updates when click", () => {
@@ -98,5 +98,21 @@ test("Check button gray when disabled", () => {
   expect(colorButton).toBeEnabled();
   expect(colorButton).toHaveStyle({
     backgroundColor: "blue",
+  });
+});
+
+//unit test example
+describe("spaces before camel-case capital letters", () => {
+  test("Works for no inner capital letters", () => {
+    //to be matcher: 두 값 비교
+    expect(replaceCamelWithSpaces("Red")).toBe("Red");
+  });
+
+  test("Works for one inner capital letters", () => {
+    expect(replaceCamelWithSpaces("MidnightBlue")).toBe("Midnight Blue");
+  });
+
+  test("Works for multiple inner capital letters", () => {
+    expect(replaceCamelWithSpaces("MediumVioletRed")).toBe("Medium Violet Red");
   });
 });
